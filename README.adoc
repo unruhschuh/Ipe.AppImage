@@ -57,3 +57,6 @@ This section describes how the AppDir needs to be built
 ** libQt5Xml.so.5
 ** libstdc++.so.6
 
+== Known issues
+
+* The command line tools like `ipetoipe` won't work this way. There would have to be an AppImage for each of the tools. Maybe in a future release.
