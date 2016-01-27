@@ -1,0 +1,52 @@
+
+= AppImage for Ipe
+
+Here you will find http://appimage.org/[AppImages] for http://ipe.otfried.org/[Ipe].
+
+== How to create an AppImage for Ipe
+
+This is an instruction on how to build an http://appimage.org/[AppImage] for http://ipe.otfried.org/[Ipe].
+This should ultimately become a recipe for automatic AppImage creation.
+
+=== Glossary
+
+* `IPE_SOURCE_DIR` is the directory where you extract `ipe-7.?.?-src.tar.gz`
+* `APP_DIR` is the `.AppDir` for the `AppImageAssistant`
+* `QT_INSTALL_PATH` this is where you installed the Qt library using the installer from http://www.qt.io[www.qt.io]. 
+
+=== Build
+
+This section describes the build process. 
+Also read `install.txt` in `IPE_SOURCE_DIR`.
+
+* `export PKG_CONFIG_PATH=QT_INSTALL_PATH/5.5/gcc_64/lib/pkgconfig/` (If you installed the Qt library using a package-manager (e.g. apt-get) this should not be necessary)
+* change `LUA_PACKAGE   ?= lua5.2` to `LUA_PACKAGE   ?= lua` (at least on Fedora 23)
+* compile Ipe using make `IPEPREFIX=.`
+
+=== AppDir
+
+This section describes how the AppDir needs to be built
+
+* copy `ipe.png` to `APP_DIR`
+* copy `Ipe.desktop` to `APP_DIR`
+* copy the content of `IPE_SOURCE_DIR/build/bin` to `APP_DIR/usr/bin`
+* copy the content of `IPE_SOURCE_DIR/src/ipe/lua` to `APP_DIR/usr/bin`
+* copy the content of `IPE_SOURCE_DIR/build/lib` to `APP_DIR/usr/lib`
+* copy the following files to `APP_DIR/usr/lib`
+** libicudata.so.54
+** libicui18n.so.54
+** libicuuc.so.54
+** libjpeg.so.62
+** liblua-5.3.so
+** libpng16.so.16
+** libQt5Concurrent.so.5
+** libQt5Core.so.5
+** libQt5DBus.so.5
+** libQt5Gui.so.5
+** libQt5PrintSupport.so.5
+** libQt5Svg.so.5
+** libQt5Widgets.so.5
+** libQt5XcbQpa.so.5
+** libQt5Xml.so.5
+** libstdc++.so.6
+
