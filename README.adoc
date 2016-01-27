@@ -2,6 +2,13 @@
 = AppImage for Ipe
 
 Here you will find http://appimage.org/[AppImages] for http://ipe.otfried.org/[Ipe].
+Please let me know if you have any problems with running Ipe using the AppImages offered on this site: thomas.leitz@web.de.
+
+== Download
+
+You can download the AppImage here or go to https://github.com/unruhschuh/Ipe.AppImage/releases[Releases].
+
+* https://github.com/unruhschuh/Ipe.AppImage/releases/download/v7.2.2/Ipe-7.2.2.AppImage[Ipe-7.2.2.AppImage]
 
 == How to create an AppImage for Ipe
 
