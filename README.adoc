@@ -26,7 +26,7 @@ This should ultimately become a recipe for automatic AppImage creation.
 This section describes the build process. 
 Also read `install.txt` in `IPE_SOURCE_DIR`.
 
-* `export PKG_CONFIG_PATH=QT_INSTALL_PATH/5.5/gcc_64/lib/pkgconfig/` (If you installed the Qt library using a package-manager (e.g. apt-get) this should not be necessary)
+* `export PKG_CONFIG_PATH=QT_INSTALL_PATH/Qt5.5.1/5.5/gcc_64/lib/pkgconfig/` (If you installed the Qt library using a package-manager (e.g. apt-get) this should not be necessary)
 * change `LUA_PACKAGE   ?= lua5.2` to `LUA_PACKAGE   ?= lua` (at least on Fedora 23)
 * compile Ipe using make `IPEPREFIX=.`
 
@@ -39,8 +39,8 @@ This section describes how the AppDir needs to be built
 * copy the content of `IPE_SOURCE_DIR/build/bin` to `APP_DIR/usr/bin`
 * copy the content of `IPE_SOURCE_DIR/src/ipe/lua` to `APP_DIR/usr/bin`
 * copy the content of `IPE_SOURCE_DIR/build/lib` to `APP_DIR/usr/lib`
-* copy the following files to `APP_DIR/usr/lib`
-* copy `libqxcb.so` to `APP_DIR/usr/bin/platforms`
+* copy `QT_INSTALL_PATH/Qt5.5.1/5.5/gcc_64/plugins/platforms/libqxcb.so` to `APP_DIR/usr/bin/platforms`
+* copy the following files to `APP_DIR/usr/lib`. QT libs are in `QT_INSTALL_PATH/Qt5.5.1/5.5/gcc_64/lib`
 ** libicudata.so.54
 ** libicui18n.so.54
 ** libicuuc.so.54
