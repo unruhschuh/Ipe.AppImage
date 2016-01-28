@@ -40,21 +40,18 @@ This section describes how the AppDir needs to be built
 * copy the content of `IPE_SOURCE_DIR/src/ipe/lua` to `APP_DIR/usr/bin`
 * copy the content of `IPE_SOURCE_DIR/build/lib` to `APP_DIR/usr/lib`
 * copy the following files to `APP_DIR/usr/lib`
+* copy `libqxcb.so` to `APP_DIR/usr/bin/platforms`
 ** libicudata.so.54
 ** libicui18n.so.54
 ** libicuuc.so.54
 ** libjpeg.so.62
 ** liblua-5.3.so
 ** libpng16.so.16
-** libQt5Concurrent.so.5
 ** libQt5Core.so.5
 ** libQt5DBus.so.5
 ** libQt5Gui.so.5
-** libQt5PrintSupport.so.5
-** libQt5Svg.so.5
 ** libQt5Widgets.so.5
 ** libQt5XcbQpa.so.5
-** libQt5Xml.so.5
 ** libstdc++.so.6
 
 == Known issues
