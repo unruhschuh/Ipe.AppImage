@@ -12,7 +12,9 @@ Controller.prototype.IntroductionPageCallback = function() {
 
 Controller.prototype.TargetDirectoryPageCallback = function()
 {
-    gui.currentPageWidget().TargetDirectoryLineEdit.setText(installer.value("HomeDir") + "/Qt");
+    //gui.currentPageWidget().TargetDirectoryLineEdit.setText(installer.value("HomeDir") + "/Qt");
+
+    gui.currentPageWidget().TargetDirectoryLineEdit.setText("/tmp/Qt");
     gui.clickButton(buttons.NextButton);
 }
 
@@ -21,8 +23,8 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
 
     widget.deselectAll();
     widget.selectComponent("qt.55.gcc_64");
-    widget.selectComponent("qt.55.qtquickcontrols");
 
+    // widget.selectComponent("qt.55.qtquickcontrols");
     // widget.deselectComponent("qt.tools.qtcreator");
     // widget.deselectComponent("qt.55.qt3d");
     // widget.deselectComponent("qt.55.qtcanvas3d");

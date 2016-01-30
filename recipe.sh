@@ -13,7 +13,8 @@ cd build
 # download packages
 ######################################################
 # epel-release for newest Qt and stuff
-sudo yum -y install epel-release readline-devel zlib-devel libpng-devel cairo-devel
+#sudo yum -y install epel-release
+sudo yum -y install readline-devel zlib-devel libpng-devel cairo-devel
 
 # Need a newer gcc, getting it from Developer Toolset 2
 sudo wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
@@ -45,7 +46,14 @@ export PKG_CONFIG_PATH=/tmp
 ######################################################
 # Install Qt
 ######################################################
-sudo yum -y install qt5-qtbase-devel
+wget http://download.qt.io/official_releases/online_installers/qt-unified-linux-x86-online.run
+chmod +x qt-unified-linux-x86-online.run
+./qt-unified-linux-x86-online.run --script qt-installer-noninteractive.qs
+# wget http://download.qt.io/official_releases/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
+# chmod +x qt-opensource-linux-x64-5.5.1.run
+# ./qt-opensource-linux-x64-5.5.1.run --script qt-installer-noninteractive.qs
+
+#sudo yum -y install qt5-qtbase-devel
 # qt5-qtlocation-devel qt5-qtscript-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-linguist qt5-qtconnectivity-devel
 
 ######################################################
