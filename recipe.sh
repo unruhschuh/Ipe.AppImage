@@ -10,14 +10,15 @@ cd build
 # download packages
 ######################################################
 # epel-release for newest Qt and stuff
-sudo yum -y install epel-release git readline-devel zlib-devel libpng-devel
+sudo yum -y install epel-release readline-devel zlib-devel libpng-devel
 
 # Need a newer gcc, getting it from Developer Toolset 2
 sudo wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
 sudo yum -y install devtoolset-2-gcc devtoolset-2-gcc-c++ devtoolset-2-binutils
 # /opt/rh/devtoolset-2/root/usr/bin/gcc
 # now holds gcc and c++ 4.8.2
-scl enable devtoolset-2 bash
+#scl enable devtoolset-2
+source /opt/rh/devtoolset-2/enable
 
 ######################################################
 # build libraries from source
