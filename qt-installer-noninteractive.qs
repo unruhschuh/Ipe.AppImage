@@ -1,3 +1,10 @@
+function Controller() {
+    installer.autoRejectMessageBoxes();
+    installer.installationFinished.connect(function() {
+        gui.clickButton(buttons.NextButton);
+    })
+}
+
 Controller.prototype.WelcomePageCallback = function() {
     gui.clickButton(buttons.NextButton);
 }
