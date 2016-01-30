@@ -10,7 +10,7 @@ cd build
 # download packages
 ######################################################
 # epel-release for newest Qt and stuff
-sudo yum -y install epel-release readline-devel zlib-devel libpng-devel
+sudo yum -y install epel-release readline-devel zlib-devel libpng-devel cairo-devel
 
 # Need a newer gcc, getting it from Developer Toolset 2
 sudo wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
@@ -37,8 +37,13 @@ cd lua-5.2.4
 make linux && sudo make install
 cd ..
 cp ../lua5.2.pc /tmp
-export PGK_CONFIG_PATH=/tmp
+export PKG_CONFIG_PATH=/tmp
 
+######################################################
+# Install Qt
+######################################################
+sudo yum -y install qt5-qtbase-devel
+# qt5-qtlocation-devel qt5-qtscript-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-linguist qt5-qtconnectivity-devel
 
 ######################################################
 # Building Ipe
