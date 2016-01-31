@@ -11,6 +11,7 @@ set -e
 # epel-release for newest Qt and stuff
 sudo yum -y install epel-release
 sudo yum -y install readline-devel zlib-devel libpng-devel cairo-devel
+sudo yum -y install binutils fuse glibc-devel glib2-devel fuse-devel gcc zlib-devel libpng12 # AppImageKit dependencies
 
 # Need a newer gcc, getting it from Developer Toolset 2
 sudo wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
@@ -52,7 +53,7 @@ cd ..
 wget http://www.lua.org/ftp/lua-5.2.4.tar.gz
 tar xfvz lua-5.2.4.tar.gz
 cd lua-5.2.4/src
-sed -i 's/CFLAGS=/CFLAGS= -fPIC /g' Makefile
+sed -i 's/^CFLAGS=/CFLAGS= -fPIC /g' Makefile
 cd ..
 make linux && sudo make install
 cd ..
@@ -61,7 +62,7 @@ export PKG_CONFIG_PATH=/tmp
 
 
 ######################################################
-# Building Ipe
+# Build Ipe
 ######################################################
 wget https://dl.bintray.com/otfried/generic/ipe/7.2/ipe-7.2.2-src.tar.gz
 
@@ -70,5 +71,61 @@ cd ipe-7.2.2
 cd src
 export QT_SELECT=5
 make IPEPREFIX=.
+
+cd ../../..
+
+######################################################
+# Build AppImageKit
+######################################################
+if [ ! -d AppImageKit ] ; then
+  git clone https://github.com/probonopd/AppImageKit.git
+fi
+cd AppImageKit/
+git_pull_rebase_helper
+cmake .
+make clean
+make
+cd ..
+
+######################################################
+# create AppDir
+######################################################
+APP=Ipe
+APP_DIR=$APP.AppDir
+APP_IMAGE=$APP.AppImage
+IPE_SOURCE_DIR=build/ipe-7.2.2
+
+mkdir $APP_DIR
+mkdir $APP_DIR/usr
+mkdir $APP_DIR/usr/bin
+mkdir $APP_DIR/usr/bin/platforms
+mkdir $APP_DIR/usr/lib
+
+cp ipe.png Ipe.AppDir/
+cp Ipe.desktop $APP_DIR
+cp $IPE_SOURCE_DIR/build/bin/* $APP_DIR/usr/bin
+cp $IPE_SOURCE_DIR/src/ipe/lua/* $APP_DIR/usr/bin
+cp $IPE_SOURCE_DIR/build/lib/* $APP_DIR/usr/lib
+cp /usr/lib64/qt5/plugins/platforms/libqxcb.so $APP_DIR/usr/bin/platforms
+
+cp /usr/lib64/libicudata.so.42 $APP_DIR/usr/lib
+cp /usr/lib64/libicui18n.so.42 $APP_DIR/usr/lib
+cp /usr/lib64/libicuuc.so.42 $APP_DIR/usr/lib
+cp /usr/local/lib/libjpeg.so.8 $APP_DIR/usr/lib
+cp /usr/lib64/libpng12.so.0 $APP_DIR/usr/lib
+
+cp /usr/lib64/libQt5Core.so.5 $APP_DIR/usr/lib
+cp /usr/lib64/libQt5Gui.so.5 $APP_DIR/usr/lib
+cp /usr/lib64/libQt5Widgets.so.5 $APP_DIR/usr/lib
+cp /usr/lib64/libQt5DBus.so.5 $APP_DIR/usr/lib
+cp /usr/lib64/libQt5XcbQpa.so.5 $APP_DIR/usr/lib
+cp /usr/lib64/libstdc++.so.6 $APP_DIR/usr/lib 
+
+
+######################################################
+# Create AppImage
+######################################################
+# Convert the AppDir into an AppImage
+AppImageKit/AppImageAssistant.AppDir/package ./$APP_DIR/ ./$APP_IMAGE
 
 
