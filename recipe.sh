@@ -11,7 +11,7 @@ set -e
 # epel-release for newest Qt and stuff
 sudo yum -y install epel-release
 sudo yum -y install readline-devel zlib-devel libpng-devel cairo-devel
-sudo yum -y install binutils fuse glibc-devel glib2-devel fuse-devel gcc zlib-devel libpng12 # AppImageKit dependencies
+sudo yum -y install cmake binutils fuse glibc-devel glib2-devel fuse-devel gcc zlib-devel libpng12 # AppImageKit dependencies
 
 # Need a newer gcc, getting it from Developer Toolset 2
 sudo wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
@@ -81,7 +81,6 @@ if [ ! -d AppImageKit ] ; then
   git clone https://github.com/probonopd/AppImageKit.git
 fi
 cd AppImageKit/
-git_pull_rebase_helper
 cmake .
 make clean
 make
@@ -100,6 +99,8 @@ mkdir $APP_DIR/usr
 mkdir $APP_DIR/usr/bin
 mkdir $APP_DIR/usr/bin/platforms
 mkdir $APP_DIR/usr/lib
+
+cp AppImageKit/AppRun Ipe.AppDir/
 
 cp ipe.png Ipe.AppDir/
 cp Ipe.desktop $APP_DIR
@@ -121,6 +122,15 @@ cp /usr/lib64/libQt5DBus.so.5 $APP_DIR/usr/lib
 cp /usr/lib64/libQt5XcbQpa.so.5 $APP_DIR/usr/lib
 cp /usr/lib64/libstdc++.so.6 $APP_DIR/usr/lib 
 
+# This application failed to start because it could not find or load the Qt platform plugin "xcb".
+# Setting export QT_DEBUG_PLUGINS=1 revealed the cause.
+#
+# QLibraryPrivate::loadPlugin failed on "/usr/lib64/qt5/plugins/platforms/libqxcb.so" : "Cannot load library /usr/lib64/qt5/plugins/platforms/libqxcb.so: (libxcb-sync.so.0: cannot open shared object file: No such file or directory)"
+#
+# ... and then some
+
+#cp /usr/lib64/libxcb-sync.so.0 Ipe.AppDir/usr/lib/
+#cp /lib64/libudev.so.0 Ipe.AppDir/usr/lib/
 
 ######################################################
 # Create AppImage
