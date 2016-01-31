@@ -5,10 +5,6 @@ set -e
 
 #wget http://download.qt.io/official_releases/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
 
-# Change directory to build. Everything happens in build.
-mkdir build
-cd build
-
 ######################################################
 # download packages
 ######################################################
@@ -40,6 +36,10 @@ sudo yum -y install qt5-qtbase-devel qt5-qtbase-gui
 ######################################################
 # build libraries from source
 ######################################################
+# Change directory to build. Everything happens in build.
+mkdir build
+cd build
+
 # libjpeg
 wget http://www.ijg.org/files/jpegsrc.v8d.tar.gz
 tar xfvz jpegsrc.v8d.tar.gz
@@ -48,11 +48,11 @@ cd jpeg-8d
 cd ..
 
 # lua
-#wget http://www.lua.org/ftp/lua-5.2.4.tar.gz
-#tar xfvz lua-5.2.4.tar.gz
-#cd lua-5.2.4
-#make linux && sudo make install
-#cd ..
+wget http://www.lua.org/ftp/lua-5.2.4.tar.gz
+tar xfvz lua-5.2.4.tar.gz
+cd lua-5.2.4
+make linux && sudo make install
+cd ..
 cp ../lua5.2.pc /tmp
 export PKG_CONFIG_PATH=/tmp
 
