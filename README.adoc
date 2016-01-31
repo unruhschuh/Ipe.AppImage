@@ -1,5 +1,6 @@
 
 = AppImage for Ipe
+:toc: preamble
 
 Here you will find http://appimage.org/[AppImages] for http://ipe.otfried.org/[Ipe].
 Please let me know if you have any problems with running Ipe using the AppImages offered on this site: thomas.leitz@web.de.
@@ -54,6 +55,39 @@ This section describes how the AppDir needs to be built
 ** libQt5XcbQpa.so.5
 ** libstdc++.so.6
 
-== Known issues
+=== Known issues
 
 * The command line tools like `ipetoipe` won't work this way. There would have to be an AppImage for each of the tools. Maybe in a future release.
+
+== Create custom CentOS 6.7 Live-CD
+
+The ready made CentOS 6.7 Live-CD only offers `371MB` free disk space on the root file system. This is not enough to install all the libraries needed to build Ipe. Therefore I created a custom Live-CD.
+
+Get the `centos6-liveCD-desktop.cfg` from http://people.centos.org/arrfab/CentOS6/LiveCD-DVD/. Change the following lines
+
+----
+- part / --size 4096 --fstype ext4
++ part / --size 8192 --fstype ext4
+----
+
+----
+- repo --name=base    --baseurl=file://REPOPATH
++ repo --name=base    --baseurl=http://ftp.rrzn.uni-hannover.de/centos/6.7/os/x86_64/
+----
+
+Add the following line below `%packages`
+
+----
+system-config-firewall-base
+----
+
+Then follow https://fedoraproject.org/wiki/How_to_create_and_use_a_Live_CD to create the ISO.
+
+Basically just do
+
+----
+livecd-creator --verbose \
+--config=centos6-liveCD-desktop.cfg \
+--fslabel=Live-CD_large \
+--cache =/var/cache/live
+----
