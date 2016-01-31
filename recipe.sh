@@ -13,7 +13,7 @@ cd build
 # download packages
 ######################################################
 # epel-release for newest Qt and stuff
-#sudo yum -y install epel-release
+sudo yum -y install epel-release
 sudo yum -y install readline-devel zlib-devel libpng-devel cairo-devel
 
 # Need a newer gcc, getting it from Developer Toolset 2
@@ -23,6 +23,19 @@ sudo yum -y install devtoolset-2-gcc devtoolset-2-gcc-c++ devtoolset-2-binutils
 # now holds gcc and c++ 4.8.2
 #scl enable devtoolset-2
 source /opt/rh/devtoolset-2/enable
+
+######################################################
+# Install Qt
+######################################################
+#wget http://download.qt.io/official_releases/online_installers/qt-unified-linux-x86-online.run
+#chmod +x qt-unified-linux-x86-online.run
+#./qt-unified-linux-x86-online.run --script qt-installer-noninteractive.qs
+# wget http://download.qt.io/official_releases/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
+# chmod +x qt-opensource-linux-x64-5.5.1.run
+# ./qt-opensource-linux-x64-5.5.1.run --script qt-installer-noninteractive.qs
+
+sudo yum -y install qt5-qtbase-devel
+# qt5-qtlocation-devel qt5-qtscript-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-linguist qt5-qtconnectivity-devel
 
 ######################################################
 # build libraries from source
@@ -43,18 +56,6 @@ cd ..
 cp ../lua5.2.pc /tmp
 export PKG_CONFIG_PATH=/tmp
 
-######################################################
-# Install Qt
-######################################################
-wget http://download.qt.io/official_releases/online_installers/qt-unified-linux-x86-online.run
-chmod +x qt-unified-linux-x86-online.run
-./qt-unified-linux-x86-online.run --script qt-installer-noninteractive.qs
-# wget http://download.qt.io/official_releases/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
-# chmod +x qt-opensource-linux-x64-5.5.1.run
-# ./qt-opensource-linux-x64-5.5.1.run --script qt-installer-noninteractive.qs
-
-#sudo yum -y install qt5-qtbase-devel
-# qt5-qtlocation-devel qt5-qtscript-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-linguist qt5-qtconnectivity-devel
 
 ######################################################
 # Building Ipe
