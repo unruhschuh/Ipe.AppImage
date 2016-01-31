@@ -34,7 +34,7 @@ source /opt/rh/devtoolset-2/enable
 # chmod +x qt-opensource-linux-x64-5.5.1.run
 # ./qt-opensource-linux-x64-5.5.1.run --script qt-installer-noninteractive.qs
 
-sudo yum -y install qt5-qtbase-devel
+sudo yum -y install qt5-qtbase-devel qt5-qtbase-gui
 # qt5-qtlocation-devel qt5-qtscript-devel qt5-qtwebkit-devel qt5-qtsvg-devel qt5-linguist qt5-qtconnectivity-devel
 
 ######################################################
@@ -48,11 +48,11 @@ cd jpeg-8d
 cd ..
 
 # lua
-wget http://www.lua.org/ftp/lua-5.2.4.tar.gz
-tar xfvz lua-5.2.4.tar.gz
-cd lua-5.2.4
-make linux && sudo make install
-cd ..
+#wget http://www.lua.org/ftp/lua-5.2.4.tar.gz
+#tar xfvz lua-5.2.4.tar.gz
+#cd lua-5.2.4
+#make linux && sudo make install
+#cd ..
 cp ../lua5.2.pc /tmp
 export PKG_CONFIG_PATH=/tmp
 
