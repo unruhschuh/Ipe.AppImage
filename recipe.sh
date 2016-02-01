@@ -99,6 +99,8 @@ mkdir $APP_DIR/usr
 mkdir $APP_DIR/usr/bin
 mkdir $APP_DIR/usr/bin/platforms
 mkdir $APP_DIR/usr/lib
+mkdir $APP_DIR/usr/lib/qt5
+mkdir $APP_DIR/usr/lib/qt5/plugins
 
 cp AppImageKit/AppRun Ipe.AppDir/
 
@@ -107,7 +109,8 @@ cp Ipe.desktop $APP_DIR
 cp $IPE_SOURCE_DIR/build/bin/* $APP_DIR/usr/bin
 cp $IPE_SOURCE_DIR/src/ipe/lua/* $APP_DIR/usr/bin
 cp $IPE_SOURCE_DIR/build/lib/* $APP_DIR/usr/lib
-cp /usr/lib64/qt5/plugins/platforms/libqxcb.so $APP_DIR/usr/bin/platforms
+#cp /usr/lib64/qt5/plugins/platforms/libqxcb.so $APP_DIR/usr/bin/platforms
+cp /usr/lib64/qt5/plugins/platforms/libqxcb.so $APP_DIR/usr/lib/qt5/plugins
 
 cp /usr/lib64/libicudata.so.42 $APP_DIR/usr/lib
 cp /usr/lib64/libicui18n.so.42 $APP_DIR/usr/lib
