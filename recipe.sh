@@ -71,6 +71,7 @@ cd ipe-7.2.2
 cd src
 export QT_SELECT=5
 make IPEPREFIX=.
+make install IPEPREFIX=/tmp/ipe/usr
 
 cd ../../..
 
@@ -94,11 +95,13 @@ APP_DIR=$APP.AppDir
 APP_IMAGE=$APP.AppImage
 IPE_SOURCE_DIR=build/ipe-7.2.2
 
+mv /tmp/ipe/usr $APP_DIR
+
 mkdir $APP_DIR
 mkdir $APP_DIR/usr
-mkdir $APP_DIR/usr/bin
+#mkdir $APP_DIR/usr/bin
 mkdir $APP_DIR/usr/bin/platforms
-mkdir $APP_DIR/usr/lib
+#mkdir $APP_DIR/usr/lib
 mkdir $APP_DIR/usr/lib/qt5
 mkdir $APP_DIR/usr/lib/qt5/plugins
 
@@ -132,8 +135,8 @@ cp /usr/lib64/libstdc++.so.6 $APP_DIR/usr/lib
 #
 # ... and then some
 
-#cp /usr/lib64/libxcb-sync.so.0 Ipe.AppDir/usr/lib/
-#cp /lib64/libudev.so.0 Ipe.AppDir/usr/lib/
+cp /usr/lib64/libxcb-sync.so.0 Ipe.AppDir/usr/lib/
+cp /lib64/libudev.so.0 Ipe.AppDir/usr/lib/
 
 ######################################################
 # Create AppImage
