@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Halt on errors
-set -e
+#set -e
 
 #wget http://download.qt.io/official_releases/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
 
@@ -114,6 +114,14 @@ cp -R /usr/lib64/qt5/plugins $APP_DIR/usr/lib/qt5/
 ldd $APP_DIR/usr/lib/qt5/plugins/platforms/libqxcb.so | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
 ldd $APP_DIR/usr/bin/* | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
 find $APP_DIR/usr/lib -name "*.so*" | xargs ldd | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
+
+cp /usr/local/lib/libjpeg.so.8 $APP_DIR/usr/lib
+
+cp $(ldconfig -p | grep libEGL.so.1 | cut -d ">" -f 2 | xargs) ./usr/lib/ # Otherwise F23 cannot load the Qt platform plugin "xcb"
+
+
+# Delete potentially dangerous libraries
+rm -f $APP_DIR/usr/lib/libstdc* $APP_DIR/usr/lib/libgobject* $APP_DIR/usr/lib/libc.so.* || true
 
 # The following are assumed to be part of the base system
 rm -f $APP_DIR/usr/lib/libcom_err.so.2 || true
