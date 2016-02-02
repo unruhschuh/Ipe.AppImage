@@ -103,44 +103,55 @@ mkdir $APP_DIR/usr
 mkdir $APP_DIR/usr/bin/platforms
 #mkdir $APP_DIR/usr/lib
 mkdir $APP_DIR/usr/lib/qt5
-mkdir $APP_DIR/usr/lib/qt5/plugins
 
 cp AppImageKit/AppRun Ipe.AppDir/
 
 cp ipe.png Ipe.AppDir/
 cp Ipe.desktop $APP_DIR
-cp $IPE_SOURCE_DIR/build/bin/* $APP_DIR/usr/bin
-cp $IPE_SOURCE_DIR/src/ipe/lua/* $APP_DIR/usr/bin
-cp $IPE_SOURCE_DIR/build/lib/* $APP_DIR/usr/lib
-#cp /usr/lib64/qt5/plugins/platforms/libqxcb.so $APP_DIR/usr/bin/platforms
-cp /usr/lib64/qt5/plugins/platforms/libqxcb.so $APP_DIR/usr/lib/qt5/plugins
 
-cp /usr/lib64/libicudata.so.42 $APP_DIR/usr/lib
-cp /usr/lib64/libicui18n.so.42 $APP_DIR/usr/lib
-cp /usr/lib64/libicuuc.so.42 $APP_DIR/usr/lib
-cp /usr/local/lib/libjpeg.so.8 $APP_DIR/usr/lib
-cp /usr/lib64/libpng12.so.0 $APP_DIR/usr/lib
+cp -R /usr/lib64/qt5/plugins $APP_DIR/usr/lib/qt5/
 
-cp /usr/lib64/libQt5Core.so.5 $APP_DIR/usr/lib
-cp /usr/lib64/libQt5Gui.so.5 $APP_DIR/usr/lib
-cp /usr/lib64/libQt5Widgets.so.5 $APP_DIR/usr/lib
-cp /usr/lib64/libQt5DBus.so.5 $APP_DIR/usr/lib
-cp /usr/lib64/libQt5XcbQpa.so.5 $APP_DIR/usr/lib
-cp /usr/lib64/libstdc++.so.6 $APP_DIR/usr/lib 
+ldd $APP_DIR/usr/lib/qt5/plugins/platforms/libqxcb.so | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
+ldd $APP_DIR/usr/bin/* | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
+find $APP_DIR/usr/lib -name "*.so*" | xargs ldd | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
 
-find . -name "*.so*" | xargs ldd | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
-#ldd /usr/lib64/*.so* | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
-#ldd /usr/lib64/libQt5XcbQpa.so.5 | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
-
-# This application failed to start because it could not find or load the Qt platform plugin "xcb".
-# Setting export QT_DEBUG_PLUGINS=1 revealed the cause.
-#
-# QLibraryPrivate::loadPlugin failed on "/usr/lib64/qt5/plugins/platforms/libqxcb.so" : "Cannot load library /usr/lib64/qt5/plugins/platforms/libqxcb.so: (libxcb-sync.so.0: cannot open shared object file: No such file or directory)"
-#
-# ... and then some
-
-cp /usr/lib64/libxcb-sync.so.0 Ipe.AppDir/usr/lib/
-cp /lib64/libudev.so.0 Ipe.AppDir/usr/lib/
+# The following are assumed to be part of the base system
+rm -f $APP_DIR/usr/lib/libcom_err.so.2 || true
+rm -f $APP_DIR/usr/lib/libcrypt.so.1 || true
+rm -f $APP_DIR/usr/lib/libdl.so.2 || true
+rm -f $APP_DIR/usr/lib/libexpat.so.1 || true
+rm -f $APP_DIR/usr/lib/libfontconfig.so.1 || true
+rm -f $APP_DIR/usr/lib/libgcc_s.so.1 || true
+rm -f $APP_DIR/usr/lib/libglib-2.0.so.0 || true
+rm -f $APP_DIR/usr/lib/libgpg-error.so.0 || true
+rm -f $APP_DIR/usr/lib/libgssapi_krb5.so.2 || true
+rm -f $APP_DIR/usr/lib/libgssapi.so.3 || true
+rm -f $APP_DIR/usr/lib/libhcrypto.so.4 || true
+rm -f $APP_DIR/usr/lib/libheimbase.so.1 || true
+rm -f $APP_DIR/usr/lib/libheimntlm.so.0 || true
+rm -f $APP_DIR/usr/lib/libhx509.so.5 || true
+rm -f $APP_DIR/usr/lib/libICE.so.6 || true
+rm -f $APP_DIR/usr/lib/libidn.so.11 || true
+rm -f $APP_DIR/usr/lib/libk5crypto.so.3 || true
+rm -f $APP_DIR/usr/lib/libkeyutils.so.1 || true
+rm -f $APP_DIR/usr/lib/libkrb5.so.26 || true
+rm -f $APP_DIR/usr/lib/libkrb5.so.3 || true
+rm -f $APP_DIR/usr/lib/libkrb5support.so.0 || true
+# rm -f $APP_DIR/usr/lib/liblber-2.4.so.2 || true # needed for debian wheezy
+# rm -f $APP_DIR/usr/lib/libldap_r-2.4.so.2 || true # needed for debian wheezy
+rm -f $APP_DIR/usr/lib/libm.so.6 || true
+rm -f $APP_DIR/usr/lib/libp11-kit.so.0 || true
+rm -f $APP_DIR/usr/lib/libpcre.so.3 || true
+rm -f $APP_DIR/usr/lib/libpthread.so.0 || true
+rm -f $APP_DIR/usr/lib/libresolv.so.2 || true
+rm -f $APP_DIR/usr/lib/libroken.so.18 || true
+rm -f $APP_DIR/usr/lib/librt.so.1 || true
+rm -f $APP_DIR/usr/lib/libsasl2.so.2 || true
+rm -f $APP_DIR/usr/lib/libSM.so.6 || true
+rm -f $APP_DIR/usr/lib/libusb-1.0.so.0 || true
+rm -f $APP_DIR/usr/lib/libuuid.so.1 || true
+rm -f $APP_DIR/usr/lib/libwind.so.0 || true
+rm -f $APP_DIR/usr/lib/libz.so.1 || true
 
 ######################################################
 # Create AppImage
