@@ -95,10 +95,10 @@ APP_DIR=$APP.AppDir
 APP_IMAGE=$APP.AppImage
 IPE_SOURCE_DIR=build/ipe-7.2.2
 
-mv /tmp/ipe/usr $APP_DIR
-
 mkdir $APP_DIR
-mkdir $APP_DIR/usr
+mv /tmp/ipe/usr $APP_DIR/
+
+#mkdir $APP_DIR/usr
 #mkdir $APP_DIR/usr/bin
 mkdir $APP_DIR/usr/bin/platforms
 #mkdir $APP_DIR/usr/lib
@@ -110,6 +110,7 @@ cp ipe.png Ipe.AppDir/
 cp Ipe.desktop $APP_DIR
 
 cp -R /usr/lib64/qt5/plugins $APP_DIR/usr/lib/qt5/
+cp $APP_DIR/usr/lib/qt5/plugins/platforms/libqxcb.so $APP_DIR/usr/bin/platforms/
 
 ldd $APP_DIR/usr/lib/qt5/plugins/platforms/libqxcb.so | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
 ldd $APP_DIR/usr/bin/* | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
