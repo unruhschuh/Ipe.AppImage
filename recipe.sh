@@ -125,6 +125,10 @@ cp /usr/lib64/libQt5DBus.so.5 $APP_DIR/usr/lib
 cp /usr/lib64/libQt5XcbQpa.so.5 $APP_DIR/usr/lib
 cp /usr/lib64/libstdc++.so.6 $APP_DIR/usr/lib 
 
+find . -name "*.so*" | xargs ldd | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
+#ldd /usr/lib64/*.so* | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
+#ldd /usr/lib64/libQt5XcbQpa.so.5 | grep "=>" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $APP_DIR/usr/lib
+
 # This application failed to start because it could not find or load the Qt platform plugin "xcb".
 # Setting export QT_DEBUG_PLUGINS=1 revealed the cause.
 #
