@@ -1,4 +1,8 @@
 [Desktop Entry]
+Type=Application
 Name=Ipe
-Exec=./usr/bin/ipe
+GenericName=drawing program
 Icon=ipe.png
+Exec=ipe
+Terminal=false
+Categories=Graphics;
