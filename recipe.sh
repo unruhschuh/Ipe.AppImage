@@ -125,6 +125,7 @@ cp $(ldconfig -p | grep libEGL.so.1 | cut -d ">" -f 2 | xargs) $APP_DIR/usr/lib/
 rm -f $APP_DIR/usr/lib/libstdc* $APP_DIR/usr/lib/libgobject* $APP_DIR/usr/lib/libc.so.* || true
 
 # The following are assumed to be part of the base system
+rm -f $APP_DIR/usr/lib/libgtk-x11-2.0.so.0 || true # this prevents Gtk-WARNINGS about missing themes
 rm -f $APP_DIR/usr/lib/libcom_err.so.2 || true
 rm -f $APP_DIR/usr/lib/libcrypt.so.1 || true
 rm -f $APP_DIR/usr/lib/libdl.so.2 || true
