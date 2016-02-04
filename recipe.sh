@@ -162,6 +162,9 @@ rm -f $APP_DIR/usr/lib/libuuid.so.1 || true
 rm -f $APP_DIR/usr/lib/libwind.so.0 || true
 rm -f $APP_DIR/usr/lib/libz.so.1 || true
 
+# patch hardcoded '/usr/lib' in binaries away
+find $APP_DIR/usr/ -type f -exec sed -i -e 's|/usr/lib|././/lib|g' {} \;
+
 ######################################################
 # Create AppImage
 ######################################################
