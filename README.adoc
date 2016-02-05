@@ -9,7 +9,8 @@ Please let me know if you have any problems with running Ipe using the AppImages
 
 You can download the AppImage here or go to https://github.com/unruhschuh/Ipe.AppImage/releases[Releases].
 
-* https://github.com/unruhschuh/Ipe.AppImage/releases/download/v7.2.2/Ipe-7.2.2.AppImage[Ipe-7.2.2.AppImage]
+* Download https://github.com/unruhschuh/Ipe.AppImage/releases/download/v7.2.2/Ipe-7.2.2.AppImage[Ipe-7.2.2.AppImage]
+* Make the AppImage executable, e.g. in the terminal run `chmod a+x Ipe-7.2.2.AppImage`
 
 == How to create an AppImage for Ipe
 
