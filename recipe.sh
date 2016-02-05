@@ -10,8 +10,8 @@
 ######################################################
 # epel-release for newest Qt and stuff
 sudo yum -y install epel-release
-sudo yum -y install readline-devel zlib-devel libpng-devel cairo-devel
-sudo yum -y install cmake binutils fuse glibc-devel glib2-devel fuse-devel gcc zlib-devel libpng12 # AppImageKit dependencies
+sudo yum -y install readline-devel zlib-devel cairo-devel
+sudo yum -y install cmake binutils fuse glibc-devel glib2-devel fuse-devel gcc zlib-devel # AppImageKit dependencies
 
 # Need a newer gcc, getting it from Developer Toolset 2
 sudo wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
@@ -60,6 +60,14 @@ cd ..
 cp ../lua5.2.pc /tmp
 export PKG_CONFIG_PATH=/tmp
 
+# libpng
+wget http://download.sourceforge.net/libpng/libpng-1.6.21.tar.gz
+tar xfvz http://download.sourceforge.net/libpng/libpng-1.6.21.tar.gz
+cd libpng-1.6.21
+./configure
+make check
+make install
+cd ..
 
 ######################################################
 # Build Ipe
@@ -69,6 +77,9 @@ wget https://dl.bintray.com/otfried/generic/ipe/7.2/ipe-7.2.2-src.tar.gz
 tar xfvz ipe-7.2.2-src.tar.gz
 cd ipe-7.2.2
 cd src
+# use lipng16
+sed -i 's/$(shell pkg-config --cflags libpng)/-I\/usr\/local\/include\/libpng16/g' config.mak
+sed -i 's/$(shell pkg-config --libs libpng)/-lpng16/g' config.mak 
 export QT_SELECT=5
 make IPEPREFIX=.
 make install IPEPREFIX=/tmp/ipe/usr
@@ -126,7 +137,6 @@ rm -f $APP_DIR/usr/lib/libstdc* $APP_DIR/usr/lib/libgobject* $APP_DIR/usr/lib/li
 
 # The following are assumed to be part of the base system
 rm -f $APP_DIR/usr/lib/libgtk-x11-2.0.so.0 || true # this prevents Gtk-WARNINGS about missing themes
-rm -f $APP_DIR/usr/lib/libdbus-1.so.3 || true # this prevents 'Failed to open "/var/lib/dbus/machine-id" error on Fedora 22/23 live CD
 rm -f $APP_DIR/usr/lib/libcom_err.so.2 || true
 rm -f $APP_DIR/usr/lib/libcrypt.so.1 || true
 rm -f $APP_DIR/usr/lib/libdl.so.2 || true
