@@ -13,81 +13,14 @@ You can download the AppImage here or go to https://github.com/unruhschuh/Ipe.Ap
 
 == How to create an AppImage for Ipe
 
-This is an instruction on how to build an http://appimage.org/[AppImage] for http://ipe.otfried.org/[Ipe].
-This should ultimately become a recipe for automatic AppImage creation.
+The AppImage for Ipe is created inside a fresh installation of CentOS 6.7. In order to build the AppImage follow these steps
 
-=== Glossary
+* Install CentOS 6.7 either on a PC or inside VirtualBox or any other virtualization program. Using 'testappimage' of AppImageKit also works, but there are issues with dbus.
+* Start the Terminal and run `git clone https://github.com/unruhschuh/Ipe.AppImage`
+* Change directory with `cd Ipe.AppImage`
+* Start compilation and packaging process with `./recipe.sh`. This creates `Ipe.AppImage` inside the current directory.
 
-* `IPE_SOURCE_DIR` is the directory where you extract `ipe-7.?.?-src.tar.gz`
-* `APP_DIR` is the `.AppDir` for the `AppImageAssistant`
-* `QT_INSTALL_PATH` this is where you installed the Qt library using the installer from http://www.qt.io[www.qt.io]. 
+== Known issues
 
-=== Build
+* The command line tools like `ipetoipe` won't work this way. There would have to be an AppImage for each of the tools. Maybe in a future release. Another approach would be to use `startipe.sh` to allow parameters to start these tools.
 
-This section describes the build process. 
-Also read `install.txt` in `IPE_SOURCE_DIR`.
-
-* `export PKG_CONFIG_PATH=QT_INSTALL_PATH/Qt5.5.1/5.5/gcc_64/lib/pkgconfig/` (If you installed the Qt library using a package-manager (e.g. apt-get) this should not be necessary)
-* change `LUA_PACKAGE   ?= lua5.2` to `LUA_PACKAGE   ?= lua` (at least on Fedora 23)
-* compile Ipe using make `IPEPREFIX=.`
-
-=== AppDir
-
-This section describes how the AppDir needs to be built
-
-* copy `ipe.png` to `APP_DIR`
-* copy `Ipe.desktop` to `APP_DIR`
-* copy the content of `IPE_SOURCE_DIR/build/bin` to `APP_DIR/usr/bin`
-* copy the content of `IPE_SOURCE_DIR/src/ipe/lua` to `APP_DIR/usr/bin`
-* copy the content of `IPE_SOURCE_DIR/build/lib` to `APP_DIR/usr/lib`
-* copy `QT_INSTALL_PATH/Qt5.5.1/5.5/gcc_64/plugins/platforms/libqxcb.so` to `APP_DIR/usr/bin/platforms`
-* copy the following files to `APP_DIR/usr/lib`. QT libs are in `QT_INSTALL_PATH/Qt5.5.1/5.5/gcc_64/lib`
-** libicudata.so.54
-** libicui18n.so.54
-** libicuuc.so.54
-** libjpeg.so.62
-** liblua-5.3.so
-** libpng16.so.16
-** libQt5Core.so.5
-** libQt5DBus.so.5
-** libQt5Gui.so.5
-** libQt5Widgets.so.5
-** libQt5XcbQpa.so.5
-** libstdc++.so.6
-
-=== Known issues
-
-* The command line tools like `ipetoipe` won't work this way. There would have to be an AppImage for each of the tools. Maybe in a future release.
-
-== Create custom CentOS 6.7 Live-CD
-
-The ready made CentOS 6.7 Live-CD only offers `371MB` free disk space on the root file system. This is not enough to install all the libraries needed to build Ipe. Therefore I created a custom Live-CD.
-
-Get the `centos6-liveCD-desktop.cfg` from http://people.centos.org/arrfab/CentOS6/LiveCD-DVD/. Change the following lines
-
-----
-- part / --size 4096 --fstype ext4
-+ part / --size 8192 --fstype ext4
-----
-
-----
-- repo --name=base    --baseurl=file://REPOPATH
-+ repo --name=base    --baseurl=http://ftp.rrzn.uni-hannover.de/centos/6.7/os/x86_64/
-----
-
-Add the following line below `%packages`
-
-----
-system-config-firewall-base
-----
-
-Then follow https://fedoraproject.org/wiki/How_to_create_and_use_a_Live_CD to create the ISO.
-
-Basically just do
-
-----
-livecd-creator --verbose \
---config=centos6-liveCD-desktop.cfg \
---fslabel=Live-CD_large \
---cache =/var/cache/live
-----
