@@ -6,7 +6,7 @@ set -e
 #wget http://download.qt.io/official_releases/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
 
 ######################################################
-# download packages
+# install packages
 ######################################################
 # epel-release for newest Qt and stuff
 sudo yum -y install epel-release
@@ -115,7 +115,7 @@ mkdir $APP_DIR/usr/bin/platforms
 #mkdir $APP_DIR/usr/lib
 mkdir $APP_DIR/usr/lib/qt5
 
-cp AppImageKit/AppRun Ipe.AppDir/
+cp AppImageKit/AppRun $APP_DIR/
 
 cp ipe.png Ipe.AppDir/
 cp Ipe.desktop $APP_DIR
@@ -135,6 +135,10 @@ cp /usr/local/lib/libpng16.so.16 $APP_DIR/usr/lib/
 
 cp $(ldconfig -p | grep libEGL.so.1 | cut -d ">" -f 2 | xargs) $APP_DIR/usr/lib/ # Otherwise F23 cannot load the Qt platform plugin "xcb"
 
+# this prevents "symbol lookup error libunity-gtk-module.so: undefined symbol: g_settings_new" on ubuntu 14.04
+rm -f $APP_DIR/usr/lib/qt5/plugins/platformthemes/libqgtk2.so || true 
+rmdir $APP_DIR/usr/lib/qt5/plugins/platformthemes || true # should be empty after deleting libqgtk2.so
+rm -f $APP_DIR/usr/lib/libgio* || true # these are not needed if we don't use gtk
 
 # Delete potentially dangerous libraries
 rm -f $APP_DIR/usr/lib/libstdc* $APP_DIR/usr/lib/libgobject* $APP_DIR/usr/lib/libc.so.* || true
