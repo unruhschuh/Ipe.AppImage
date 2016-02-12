@@ -148,6 +148,8 @@ rm -f $APP_DIR/usr/lib/libgtk-x11-2.0.so.0 || true # this prevents Gtk-WARNINGS 
 rm -f $APP_DIR/usr/lib/libdbus-1.so.3 || true # this prevents '/var/lib/dbus/machine-id' error on fedora 22/23 live cd
 rm -f $APP_DIR/usr/lib/libGL.so.* || true
 rm -f $APP_DIR/usr/lib/libdrm.so.* || true
+rm -f $APP_DIR/usr/lib/libxcb.so.1 || true
+rm -f $APP_DIR/usr/lib/libX11.so.6 || true
 rm -f $APP_DIR/usr/lib/libcom_err.so.2 || true
 rm -f $APP_DIR/usr/lib/libcrypt.so.1 || true
 rm -f $APP_DIR/usr/lib/libdl.so.2 || true
