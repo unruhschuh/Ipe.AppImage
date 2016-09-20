@@ -50,14 +50,14 @@ cd jpeg-8d
 cd ..
 
 # lua
-wget http://www.lua.org/ftp/lua-5.2.4.tar.gz
-tar xfvz lua-5.2.4.tar.gz
-cd lua-5.2.4/src
+wget http://www.lua.org/ftp/lua-5.3.3.tar.gz
+tar xfvz lua-5.3.3.tar.gz
+cd lua-5.3.3/src
 sed -i 's/^CFLAGS=/CFLAGS= -fPIC /g' Makefile
 cd ..
 make linux && sudo make install
 cd ..
-cp ../lua5.2.pc /tmp
+cp ../lua5.3.pc /tmp
 export PKG_CONFIG_PATH=/tmp
 
 # libpng
@@ -72,10 +72,10 @@ cd ..
 ######################################################
 # Build Ipe
 ######################################################
-wget https://dl.bintray.com/otfried/generic/ipe/7.2/ipe-7.2.2-src.tar.gz
+wget https://dl.bintray.com/otfried/generic/ipe/7.2/ipe-7.2.6-src.tar.gz
 
-tar xfvz ipe-7.2.2-src.tar.gz
-cd ipe-7.2.2
+tar xfvz ipe-7.2.6-src.tar.gz
+cd ipe-7.2.6
 cd src
 # use lipng16
 sed -i 's/$(shell pkg-config --cflags libpng)/-I\/usr\/local\/include\/libpng16/g' config.mak
@@ -104,7 +104,7 @@ cd ..
 APP=Ipe
 APP_DIR=$APP.AppDir
 APP_IMAGE=$APP.AppImage
-IPE_SOURCE_DIR=build/ipe-7.2.2
+IPE_SOURCE_DIR=build/ipe-7.2.6
 
 mkdir $APP_DIR
 mv /tmp/ipe/usr $APP_DIR/
