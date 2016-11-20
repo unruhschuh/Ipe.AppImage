@@ -91,9 +91,9 @@ cd ../../..
 ######################################################
 if [ ! -d AppImageKit ] ; then
   git clone https://github.com/probonopd/AppImageKit.git
-  git checkout 28cc61e
 fi
 cd AppImageKit/
+git checkout 28cc61e
 cmake .
 make clean
 make
